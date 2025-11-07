@@ -1,3 +1,376 @@
+// Quiz Questions
+const quizQuestions = [
+    {
+        question: "Was ist das wichtigste an Weihnachten?",
+        answers: [
+            "Die Bescherung",
+            "Die Zeit mit der Familie ❤️",
+            "Das Kirche",
+            "Der Weihnachtsbaum"
+        ],
+        correct: 1
+    },
+    {
+        question: "Worauf hab ich dicke Bock?",
+        answers: [
+            "Gefragt werden was ich so mache wenn ich Freunde und Familie treffe (Und was machst du so?)",
+            "Das kühle Bier am Weihnachtsmorgen im Leo's",
+            "Futterrrrrrrr: Fois Gras, Lachs, Salat und so",
+            "Das Händeschütteln in der Kirche"
+        ],
+        correct: 2
+    },
+    {
+        question: "Wer sind meine Lieblingsmenschen?",
+        answers: [
+            "Die Bernhard Familie",
+            "Meine Eltis, Schwistis und Omis",
+            "Nicky der Kläffer und Marabello",
+            "Nick Wirkotzki"
+        ],
+        correct: 1
+    },
+    {
+        question: "Wer ist der wichtigste, coolste, liebste, schönste Teil der Familie? Achtung: einfacher als gedacht!",
+        answers: [
+            "Euer Bratan Robin natürlich!!!!",
+            "Der coole Macker Robierto",
+            "Der Sohn von Evelyn und Rolf",
+            "Emille und Felille die Prototypen"
+        ],
+        correct: 3
+    }
+];
+
+// Quiz functionality
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let answeredQuestions = [];
+
+function initQuiz() {
+    const quizModal = document.getElementById('quizModal');
+    const quizContainer = document.getElementById('quizContainer');
+    const submitButton = document.getElementById('submitQuiz');
+    const mainContent = document.getElementById('mainContent');
+    
+    // Check if quiz was already passed
+    const quizPassed = localStorage.getItem('quizPassed') === 'true';
+    
+    if (quizPassed) {
+        // Quiz already passed, show main content
+        if (quizModal) quizModal.style.display = 'none';
+        if (mainContent) mainContent.style.display = 'block';
+        return;
+    }
+    
+    // Show quiz modal
+    if (quizModal) quizModal.style.display = 'flex';
+    if (mainContent) mainContent.style.display = 'none';
+    
+    // Reset quiz state
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    answeredQuestions = [];
+    
+    // Remove any existing retry button
+    const existingRetry = document.getElementById('quizRetryButton');
+    if (existingRetry) {
+        existingRetry.remove();
+    }
+    
+    // Show first question
+    showQuestion(0);
+}
+
+function showQuestion(index) {
+    const quizContainer = document.getElementById('quizContainer');
+    const submitButton = document.getElementById('submitQuiz');
+    const quizResults = document.getElementById('quizResults');
+    
+    if (!quizContainer) return;
+    
+    // Hide results if visible
+    if (quizResults) quizResults.style.display = 'none';
+    
+    // Remove retry button if it exists
+    const existingRetry = document.getElementById('quizRetryButton');
+    if (existingRetry) {
+        existingRetry.remove();
+    }
+    
+    // Clear container
+    quizContainer.innerHTML = '';
+    
+    if (index >= quizQuestions.length) {
+        // All questions answered, show final results
+        showFinalResults();
+        return;
+    }
+    
+    const question = quizQuestions[index];
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'quiz-question';
+    questionDiv.setAttribute('data-question-index', index);
+    
+    const questionTitle = document.createElement('h3');
+    questionTitle.className = 'question-title';
+    questionTitle.textContent = `Frage ${index + 1} von ${quizQuestions.length}: ${question.question}`;
+    questionDiv.appendChild(questionTitle);
+    
+    const answersDiv = document.createElement('div');
+    answersDiv.className = 'answers-container';
+    
+    question.answers.forEach((answer, answerIndex) => {
+        const answerLabel = document.createElement('label');
+        answerLabel.className = 'answer-option';
+        
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `question-${index}`;
+        radio.value = answerIndex;
+        radio.id = `q${index}-a${answerIndex}`;
+        
+        // Disable if already answered
+        if (answeredQuestions.includes(index)) {
+            radio.disabled = true;
+            if (userAnswers[index] === answerIndex) {
+                radio.checked = true;
+            }
+            if (answerIndex === question.correct) {
+                answerLabel.classList.add('correct-answer');
+            } else if (userAnswers[index] === answerIndex && userAnswers[index] !== question.correct) {
+                answerLabel.classList.add('wrong-answer');
+            }
+        } else {
+            // Add event listener for immediate answer check
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    checkAnswer(index, answerIndex);
+                }
+            });
+        }
+        
+        const answerText = document.createElement('span');
+        answerText.textContent = answer;
+        
+        answerLabel.appendChild(radio);
+        answerLabel.appendChild(answerText);
+        answersDiv.appendChild(answerLabel);
+    });
+    
+    questionDiv.appendChild(answersDiv);
+    
+    // Add answer feedback if already answered
+    if (answeredQuestions.includes(index)) {
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'answer-feedback';
+        const isCorrect = userAnswers[index] === question.correct;
+        feedbackDiv.innerHTML = isCorrect 
+            ? '<p class="feedback-correct">✅ Richtig! Gut gemacht!</p>'
+            : '<p class="feedback-wrong">❌ Falsch. Die richtige Antwort ist: ' + question.answers[question.correct] + '</p>';
+        questionDiv.appendChild(feedbackDiv);
+    }
+    
+    quizContainer.appendChild(questionDiv);
+    
+    // Hide submit button (we don't need it anymore)
+    if (submitButton) submitButton.style.display = 'none';
+}
+
+function checkAnswer(questionIndex, answerIndex) {
+    const question = quizQuestions[questionIndex];
+    const isCorrect = answerIndex === question.correct;
+    
+    // Save answer
+    userAnswers[questionIndex] = answerIndex;
+    answeredQuestions.push(questionIndex);
+    
+    // Show feedback immediately
+    showQuestion(questionIndex);
+    
+    if (isCorrect) {
+        // Correct answer - automatically proceed to next question
+        if (questionIndex < quizQuestions.length - 1) {
+            // Not the last question, go to next
+            setTimeout(() => {
+                showQuestion(questionIndex + 1);
+            }, 1500); // 1.5 second delay to show feedback
+        } else {
+            // Last question and correct - all questions passed!
+            setTimeout(() => {
+                // All questions answered correctly, grant access
+                localStorage.setItem('quizPassed', 'true');
+                
+                const quizModal = document.getElementById('quizModal');
+                const mainContent = document.getElementById('mainContent');
+                if (quizModal) quizModal.style.display = 'none';
+                if (mainContent) mainContent.style.display = 'block';
+                
+                // Initialize main content
+                generateGifts();
+                showButtonHint();
+                setupImageModal();
+                setupGiftModals();
+                
+                // Update texts based on current theme
+                const isChristmas = body.classList.contains('christmas-theme');
+                updateTextsForTheme(isChristmas);
+            }, 1500);
+        }
+    } else {
+        // Wrong answer - show retry button
+        setTimeout(() => {
+            showRetryButton();
+        }, 500);
+        
+        // Special handling for last question (index 3)
+        if (questionIndex === 3) {
+            // Show special popup for last question
+            setTimeout(() => {
+                showSpecialPopup();
+            }, 1000);
+        }
+    }
+}
+
+function showRetryButton() {
+    // Remove existing retry button if any
+    const existingRetry = document.getElementById('quizRetryButton');
+    if (existingRetry) {
+        existingRetry.remove();
+    }
+    
+    // Create retry button
+    const retryButton = document.createElement('button');
+    retryButton.id = 'quizRetryButton';
+    retryButton.className = 'quiz-button retry-button quiz-retry-fixed';
+    retryButton.textContent = 'Nochmal versuchen';
+    retryButton.onclick = () => {
+        // Reset quiz
+        currentQuestionIndex = 0;
+        userAnswers = [];
+        answeredQuestions = [];
+        
+        // Remove retry button
+        retryButton.remove();
+        
+        // Restart quiz
+        showQuestion(0);
+    };
+    
+    // Add to body (not quiz-content) for fixed positioning
+    document.body.appendChild(retryButton);
+}
+
+function showSpecialPopup() {
+    // Create popup modal
+    const popup = document.createElement('div');
+    popup.className = 'special-popup';
+    popup.innerHTML = `
+        <div class="special-popup-content">
+            <h3>😄 Hör mal!</h3>
+            <p>aber hörma das kann doch nicht sein dass ihr diese easy frage nicht richtig gemacht habt!! ihr kennt mich doch ich bin ein ganz herzlicher macker</p>
+            <button class="quiz-button" id="closeSpecialPopup">OK, verstanden! 😅</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+    
+    // Close button functionality
+    const closeButton = popup.querySelector('#closeSpecialPopup');
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            popup.remove();
+        });
+    }
+    
+    // Close when clicking outside
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.remove();
+        }
+    });
+    
+    // Auto remove after 10 seconds
+    setTimeout(() => {
+        if (popup.parentNode) {
+            popup.remove();
+        }
+    }, 10000);
+}
+
+function showFinalResults() {
+    const quizContainer = document.getElementById('quizContainer');
+    const quizResults = document.getElementById('quizResults');
+    const resultsTitle = document.getElementById('resultsTitle');
+    const resultsScore = document.getElementById('resultsScore');
+    const retryButton = document.getElementById('retryButton');
+    
+    if (!quizContainer || !quizResults) return;
+    
+    // Hide quiz container
+    quizContainer.style.display = 'none';
+    
+    // Calculate score
+    let correctCount = 0;
+    quizQuestions.forEach((q, index) => {
+        if (userAnswers[index] === q.correct) {
+            correctCount++;
+        }
+    });
+    
+    const totalQuestions = quizQuestions.length;
+    const scoreText = `Du hast ${correctCount} von ${totalQuestions} Fragen richtig beantwortet!`;
+    
+    if (correctCount === totalQuestions) {
+        // Passed!
+        if (resultsTitle) resultsTitle.textContent = '🎉 Perfekt! Du hast bestanden! 🎉';
+        if (resultsTitle) resultsTitle.style.color = '#28a745';
+        if (resultsScore) resultsScore.textContent = scoreText;
+        
+        // Save to localStorage
+        localStorage.setItem('quizPassed', 'true');
+        
+        // Show main content after a short delay
+        setTimeout(() => {
+            const quizModal = document.getElementById('quizModal');
+            const mainContent = document.getElementById('mainContent');
+            if (quizModal) quizModal.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+            
+            // Initialize main content now that quiz is passed
+            generateGifts();
+            showButtonHint();
+            setupImageModal();
+            setupGiftModals();
+            
+            // Update texts based on current theme
+            const isChristmas = body.classList.contains('christmas-theme');
+            updateTextsForTheme(isChristmas);
+        }, 2000);
+    } else {
+        // Failed
+        if (resultsTitle) resultsTitle.textContent = '😔 Leider nicht bestanden';
+        if (resultsTitle) resultsTitle.style.color = '#dc3545';
+        if (resultsScore) resultsScore.textContent = scoreText + ' Du brauchst ' + totalQuestions + '/' + totalQuestions + ' richtige Antworten. Versuch es nochmal!';
+        
+        // Show retry button
+        if (retryButton) {
+            retryButton.style.display = 'block';
+            retryButton.onclick = () => {
+                // Reset and restart quiz
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                answeredQuestions = [];
+                showQuestion(0);
+                if (quizResults) quizResults.style.display = 'none';
+            };
+        }
+    }
+    
+    // Show results
+    if (quizResults) quizResults.style.display = 'block';
+}
+
 // Christmas jokes array - Deutsche Weihnachtswitze
 const christmasJokes = [
     {
@@ -430,14 +803,27 @@ function setupGiftModals() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    generateGifts();
-    showButtonHint();
-    setupImageModal();
-    setupGiftModals();
+    // Initialize quiz first
+    initQuiz();
     
-    // Update texts based on current theme
-    const isChristmas = body.classList.contains('christmas-theme');
-    updateTextsForTheme(isChristmas);
+    // Set up quiz submit button
+    const submitButton = document.getElementById('submitQuiz');
+    if (submitButton) {
+        submitButton.addEventListener('click', submitQuiz);
+    }
+    
+    // Only initialize main content if quiz is passed
+    const quizPassed = localStorage.getItem('quizPassed') === 'true';
+    if (quizPassed) {
+        generateGifts();
+        showButtonHint();
+        setupImageModal();
+        setupGiftModals();
+        
+        // Update texts based on current theme
+        const isChristmas = body.classList.contains('christmas-theme');
+        updateTextsForTheme(isChristmas);
+    }
 });
 
 // Smooth scroll behavior enhancement
@@ -454,12 +840,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add parallax effect to header on scroll
+// Add parallax effect to header on scroll (only for professional theme)
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const header = document.querySelector('.header');
-    if (header) {
+    if (header && !document.body.classList.contains('christmas-theme')) {
         header.style.transform = `translateY(${scrolled * 0.5}px)`;
+    } else if (header && document.body.classList.contains('christmas-theme')) {
+        // No parallax for Christmas theme to keep background visible
+        header.style.transform = 'none';
     }
 });
 

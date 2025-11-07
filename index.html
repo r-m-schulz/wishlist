@@ -10,6 +10,28 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-content">
+            <h2 class="quiz-title">🎄 Weihnachts-Quiz 🎄</h2>
+            <p class="quiz-intro">Bevor du die Wunschliste sehen kannst, musst du dieses Quiz bestehen! Du brauchst 4/4 richtige Antworten. Viel Erfolg! 🎅</p>
+            
+            <div class="quiz-container" id="quizContainer">
+                <!-- Quiz questions will be dynamically generated here -->
+            </div>
+            
+            <div class="quiz-results" id="quizResults" style="display: none;">
+                <h3 class="results-title" id="resultsTitle"></h3>
+                <p class="results-score" id="resultsScore"></p>
+                <button class="quiz-button retry-button" id="retryButton">Nochmal versuchen</button>
+            </div>
+            
+            <button class="quiz-button submit-button" id="submitQuiz" style="display: none;">Antworten absenden</button>
+        </div>
+    </div>
+
+    <!-- Main Content (hidden until quiz is passed) -->
+    <div class="main-content" id="mainContent" style="display: none;">
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle" aria-label="Theme wechseln">
         <span class="theme-icon" id="themeIcon"></span>
@@ -87,6 +109,8 @@
             <p class="modal-text">hahaha der button kann nix lol. Ihr habt meine nummer. ruft ruhig an bratans</p>
         </div>
     </div>
+
+    </div> <!-- End main-content -->
 
     <script src="gifts.js"></script>
     <script src="script.js"></script>
