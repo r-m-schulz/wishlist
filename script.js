@@ -5,7 +5,7 @@ const quizQuestions = [
         answers: [
             "Die Bescherung",
             "Die Zeit mit der Familie ❤️",
-            "Das Kirche",
+            "Die Kirche",
             "Der Weihnachtsbaum"
         ],
         correct: 1
