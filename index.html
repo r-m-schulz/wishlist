@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weihnachtswunschliste 🎄</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Theme wechseln">
+        <span class="theme-icon" id="themeIcon"></span>
+    </button>
+
+    <!-- Button Hint Popup -->
+    <div class="button-hint" id="buttonHint">
+        <div class="hint-content">
+            <p>Schau dir diesen Button hier an! 👆</p>
+            <button class="hint-close" id="hintClose">✕</button>
+        </div>
+        <div class="hint-arrow"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="title">Meine Weihnachtswunschliste</h1>
+    </header>
+
+    <!-- Introduction -->
+    <section class="intro-section">
+        <div class="container">
+            <p class="intro-text" id="introText">
+                Willkommen! Dies ist eine einfache Wunschliste mit Dingen, die mir aufgefallen sind. 
+                Bitte wisse, dass dies nur <em>Wünsche</em> sind und nichts für ein Geschenk benötigt wird. 
+                Die Liebe der Familie ist mehr als genug! ❤️
+            </p>
+        </div>
+    </section>
+
+    <!-- Gift Items -->
+    <section class="gifts-section">
+        <div class="container" id="giftsContainer">
+            <!-- Gifts will be dynamically generated from gifts.js -->
+        </div>
+    </section>
+
+    <!-- Joke Section (only shown in Christmas theme) -->
+    <section class="joke-section" id="jokeSection" style="display: none;">
+        <div class="container">
+            <div class="joke-box">
+                <p class="joke-text" id="jokeText">
+                    Warum mögen Weihnachtsbäume kein Stricken?<br>
+                    Weil sie immer ihre Nadeln verlieren! 🎄😄
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- End Message -->
+    <section class="end-section">
+        <div class="container">
+            <p class="end-message" id="endMessage">Das ist das Ende der Wunschliste!</p>
+            <p class="end-submessage" id="endSubmessage">Vielen Dank, dass du dir die Zeit genommen hast, sie durchzusehen. ❤️</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="contact-title" id="contactTitle">Hast du Fragen?</h2>
+            <p class="contact-text" id="contactText">
+                Falls du Fragen zu einem der Artikel hast oder Hilfe beim Finden von etwas brauchst, 
+                melde dich gerne! Ich freue mich immer über ein Gespräch. 🎅
+            </p>
+            <button class="chat-button" id="chatButton">Hier klicken dann quatschen wir</button>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <img src="IMG_0950.JPG" alt="Elf on the Shelf" id="elfImage" class="elf-image">
+            <p class="modal-text">hahaha der button kann nix lol. Ihr habt meine nummer. ruft ruhig an bratans</p>
+        </div>
+    </div>
+
+    <script src="gifts.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

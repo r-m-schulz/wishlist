@@ -1,0 +1,874 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Professional Theme (Default) */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent: #007bff;
+    --accent-hover: #0056b3;
+    --border-color: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --gradient-start: #667eea;
+    --gradient-end: #764ba2;
+}
+
+body.christmas-theme {
+    /* Christmas Theme */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d1b1b;
+    --text-primary: #ffffff;
+    --text-secondary: #ffd700;
+    --accent: #dc3545;
+    --accent-hover: #c82333;
+    --border-color: #ff6b6b;
+    --shadow: rgba(255, 215, 0, 0.3);
+    --gradient-start: #dc3545;
+    --gradient-end: #ffd700;
+}
+
+body {
+    font-family: 'Geneva', 'Verdana', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Christmas theme font and background */
+body.christmas-theme {
+    font-family: 'Mountains of Christmas', 'Kalam', cursive, 'Geneva', 'Verdana', sans-serif;
+    background-image: url('https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1920&h=1080&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.christmas-theme::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-primary);
+    opacity: 0.75;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+/* Button Hint Popup */
+.button-hint {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1002;
+    opacity: 0;
+    transform: translateX(400px);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button-hint.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+.hint-content {
+    background: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+    max-width: 280px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hint-content p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #212529;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.hint-close {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.hint-close:hover {
+    background: #e0e0e0;
+    transform: scale(1.1);
+}
+
+.hint-arrow {
+    display: none;
+}
+
+body.christmas-theme .button-hint {
+    display: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 100px 20px 60px;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove dots pattern for professional theme - keep it sleek */
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none; /* Hidden by default for professional theme */
+}
+
+/* Christmas theme - add Santa background and festive decorations */
+body.christmas-theme .header {
+    background: linear-gradient(135deg, #dc3545, #ffd700, #dc3545);
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3), inset 0 0 100px rgba(220, 53, 69, 0.2);
+    border-bottom: 5px solid #ffd700;
+}
+
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+body.christmas-theme .header::before {
+    display: block;
+    background: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-size="20" fill="white" opacity="0.1" text-anchor="middle">❄</text></svg>') repeat,
+        url('https://images.unsplash.com/photo-1482517967863-00e15c9b44be?w=1920&h=1080&fit=crop') center/cover;
+    opacity: 0.2;
+    background-blend-mode: overlay;
+    animation: zoom-in-out 15s ease-in-out infinite;
+    background-size: cover;
+    background-position: center;
+}
+
+@keyframes zoom-in-out {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+body.christmas-theme .header::after {
+    content: '✨ 🎄 ✨';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    opacity: 0.6;
+    z-index: 1;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100px);
+    }
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+    animation: fadeInDown 1s ease;
+}
+
+/* Christmas theme title styling */
+body.christmas-theme .title {
+    font-weight: 700;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(220, 53, 69, 0.4),
+        2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+    transform: perspective(500px) rotateX(5deg);
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 1s ease 0.3s both;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Introduction Section */
+.intro-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Gifts Section */
+.gifts-section {
+    padding: 60px 20px;
+}
+
+.gift-item {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px var(--shadow);
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.gift-item.animate {
+    animation: slideUp 0.8s ease forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gift-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px var(--shadow);
+}
+
+.gift-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+.gift-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gift-item:hover .gift-image img {
+    transform: scale(1.1);
+}
+
+.gift-content {
+    padding: 30px;
+}
+
+.gift-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.gift-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.gift-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.gift-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+.gift-link:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.gift-modal-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px var(--shadow);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.gift-modal-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+body.christmas-theme .gift-modal-button {
+    background: linear-gradient(135deg, #d32f2f, #f57c00);
+}
+
+body.christmas-theme .gift-modal-button:hover {
+    background: linear-gradient(135deg, #b71c1c, #e65100);
+}
+
+/* Joke Section */
+.joke-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.joke-box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow);
+    animation: bounceIn 1s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.joke-text {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+/* Inline Joke Boxes (between gifts) */
+.joke-box-inline {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.4s ease;
+    text-align: center;
+}
+
+.joke-box-inline.animate {
+    animation: slideUp 0.8s ease forwards;
+}
+
+.joke-question {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.joke-answer {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Christmas theme styling for joke boxes */
+body.christmas-theme .joke-box-inline {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(255, 215, 0, 0.1));
+    border: 2px solid var(--accent);
+    box-shadow: 0 4px 20px var(--shadow), 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+body.christmas-theme .joke-question {
+    color: var(--text-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.christmas-theme .joke-answer {
+    color: var(--text-secondary);
+}
+
+/* End Section */
+.end-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.end-message {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease;
+}
+
+.end-submessage {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    animation: fadeIn 1s ease 0.3s both;
+}
+
+/* Contact Section */
+.contact-section {
+    padding: 60px 20px;
+    text-align: center;
+    background: var(--bg-secondary);
+    margin: 40px 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.contact-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.contact-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.chat-button {
+    display: none;
+    margin: 30px auto 0;
+    padding: 15px 40px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--shadow);
+    font-family: 'Geneva', 'Verdana', sans-serif;
+}
+
+body.christmas-theme .chat-button {
+    display: block;
+}
+
+.chat-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.chat-button:active {
+    transform: translateY(0);
+}
+
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.3s ease;
+}
+
+.image-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 80%;
+    max-height: 85vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    animation: modalPop 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@keyframes modalPop {
+    0% {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.modal-close:hover {
+    color: var(--accent);
+    transform: scale(1.2);
+}
+
+.elf-image {
+    max-width: 100%;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-text {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-top: 20px;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+body.christmas-theme .modal-text {
+    color: var(--text-primary);
+    font-family: 'Mountains of Christmas', 'Kalam', cursive;
+}
+
+/* Footer */
+.footer {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-text {
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .gift-item {
+        flex-direction: row;
+    }
+
+    .gift-image {
+        width: 40%;
+        height: auto;
+        min-height: 300px;
+    }
+
+    .gift-content {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 4.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .theme-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Confetti Animation */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    top: -10px;
+    z-index: 9999;
+    animation: confetti-fall linear forwards;
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(odd) {
+    background: #dc3545;
+    width: 8px;
+    height: 8px;
+}
+
+.confetti:nth-child(even) {
+    background: #28a745;
+    width: 12px;
+    height: 12px;
+}
+
+.confetti:nth-child(3n) {
+    background: #ffd700;
+    width: 6px;
+    height: 6px;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Christmas greeting animation */
+.christmas-greeting {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 10000;
+    background: linear-gradient(135deg, #dc3545, #ffd700);
+    color: white;
+    padding: 40px 60px;
+    border-radius: 20px;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    animation: greeting-pop 1s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes greeting-pop {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.christmas-greeting.fade-out {
+    animation: greeting-fade-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes greeting-fade-out {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.7) translateY(-20px);
+        opacity: 0;
+    }
+}
+
