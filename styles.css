@@ -1085,6 +1085,15 @@ html {
     background: #dc3545;
 }
 
+.quiz-retry-fixed:hover {
+    transform: translateX(-50%) translateY(-2px);
+    background: #c82333;
+}
+
+.quiz-retry-fixed:active {
+    transform: translateX(-50%) translateY(0);
+}
+
 /* Christmas theme for quiz */
 body.christmas-theme .quiz-modal {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.95), rgba(255, 215, 0, 0.95));
