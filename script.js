@@ -53,17 +53,7 @@ function initQuiz() {
     const submitButton = document.getElementById('submitQuiz');
     const mainContent = document.getElementById('mainContent');
     
-    // Check if quiz was already passed
-    const quizPassed = localStorage.getItem('quizPassed') === 'true';
-    
-    if (quizPassed) {
-        // Quiz already passed, show main content
-        if (quizModal) quizModal.style.display = 'none';
-        if (mainContent) mainContent.style.display = 'block';
-        return;
-    }
-    
-    // Show quiz modal
+    // Always show quiz on page load
     if (quizModal) quizModal.style.display = 'flex';
     if (mainContent) mainContent.style.display = 'none';
     
@@ -199,8 +189,6 @@ function checkAnswer(questionIndex, answerIndex) {
             // Last question and correct - all questions passed!
             setTimeout(() => {
                 // All questions answered correctly, grant access
-                localStorage.setItem('quizPassed', 'true');
-                
                 const quizModal = document.getElementById('quizModal');
                 const mainContent = document.getElementById('mainContent');
                 if (quizModal) quizModal.style.display = 'none';
@@ -326,9 +314,6 @@ function showFinalResults() {
         if (resultsTitle) resultsTitle.textContent = '🎉 Perfekt! Du hast bestanden! 🎉';
         if (resultsTitle) resultsTitle.style.color = '#28a745';
         if (resultsScore) resultsScore.textContent = scoreText;
-        
-        // Save to localStorage
-        localStorage.setItem('quizPassed', 'true');
         
         // Show main content after a short delay
         setTimeout(() => {
@@ -812,18 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitButton.addEventListener('click', submitQuiz);
     }
     
-    // Only initialize main content if quiz is passed
-    const quizPassed = localStorage.getItem('quizPassed') === 'true';
-    if (quizPassed) {
-        generateGifts();
-        showButtonHint();
-        setupImageModal();
-        setupGiftModals();
-        
-        // Update texts based on current theme
-        const isChristmas = body.classList.contains('christmas-theme');
-        updateTextsForTheme(isChristmas);
-    }
+    // Main content will be initialized when quiz is passed
 });
 
 // Smooth scroll behavior enhancement

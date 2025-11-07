@@ -65,6 +65,31 @@ body.christmas-theme::before {
     pointer-events: none;
 }
 
+/* Quiz Reset Button */
+.quiz-reset-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: rgba(108, 117, 125, 0.8);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.quiz-reset-button:hover {
+    background: rgba(108, 117, 125, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* Theme Toggle Button */
 .theme-toggle {
     position: fixed;
