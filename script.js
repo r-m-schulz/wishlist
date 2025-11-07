@@ -627,6 +627,9 @@ themeToggle.addEventListener('click', () => {
             jokeSection.style.display = 'none';
         }
         
+        // Re-setup gift modals to ensure they work after theme change
+        setupGiftModals();
+        
         // Trigger confetti and greeting when switching TO Christmas
         if (isSwitchingToChristmas) {
             createConfetti();
@@ -648,6 +651,9 @@ themeToggle.addEventListener('click', () => {
         if (jokeSection) {
             jokeSection.style.display = 'none';
         }
+        
+        // Re-setup gift modals to ensure they work after theme change
+        setupGiftModals();
     }
 });
 
@@ -763,15 +769,22 @@ function setupImageModal() {
 
 // Setup gift modal buttons
 function setupGiftModals() {
+    // Remove existing event listeners by cloning and replacing buttons
     const giftModalButtons = document.querySelectorAll('.gift-modal-button');
     const imageModal = document.getElementById('imageModal');
     const modalImage = document.getElementById('elfImage');
     const modalText = document.querySelector('.modal-text');
     
     giftModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const imageSrc = button.getAttribute('data-image');
-            const text = button.getAttribute('data-text');
+        // Remove any existing event listeners by replacing the button
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        // Add fresh event listener
+        newButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const imageSrc = newButton.getAttribute('data-image');
+            const text = newButton.getAttribute('data-text');
             
             if (imageModal && modalImage) {
                 modalImage.src = imageSrc;
