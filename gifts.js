@@ -62,12 +62,13 @@ const gifts = [
         ]
     },
     {
-        title: "Ein cooles Buch über Investments",
-        description: "Ich finde Investments sind super wichtig und da würde ich glaube ich gerne mehr lernen. Deswegen gibt es da ja ein cooles was es gibt mit dem ich genau das machen kann!",
+        title: "Ein cooles Buch über Investments oder Business Processes",
+        description: "Ich finde Investments sind super wichtig aber auch Business generell wie es funktioniert (auch bezogen auf Psychology und so) und da würde ich glaube ich gerne mehr lernen. Deswegen gibt es da ja ein cooles was es gibt mit dem ich genau das machen kann!",
         image: "gifts/investments.jpg",
         links: [
             { text: "Website vom bro", url: "https://buchhandlung-eulennest.buchkatalog.de" },
             { text: "Spot vom bro", url: "https://maps.app.goo.gl/sEP6gngynDUWHKUG6" },
+            { text: "Natürlich nehme ich das auch!", url: "https://www.amazon.com/Toolbox-zur-Konfliktlösung-erfolgreich-Weiterbildung-ebook/dp/B0CZR3DDK6/ref=sr_1_2?crid=20UV7RTG7AUO7&dib=eyJ2IjoiMSJ9._3kKDjKrswpFvP1cSYdX_zN7wJ0Yom0YTSMGO0ySR5_GjHj071QN20LucGBJIEps.BIcOZOFMW84dvJIZ8r74dsMlxelJ3D8YYylA9VULRQU&dib_tag=se&keywords=rolf+Schulz+toolbox+zur+konfliktlösung&qid=1762570988&refresh=1&sprefix=rolf+schulz+toolbox+zur+konfliktlös%2Caps%2C320&sr=8-2" },
         ]
     },
     {
