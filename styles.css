@@ -358,9 +358,75 @@ body.christmas-theme .title {
 .intro-text {
     font-size: 1.2rem;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
     color: var(--text-secondary);
     animation: fadeIn 1s ease;
+}
+
+/* Hauptwunsch Button */
+.hauptwunsch-button {
+    display: block;
+    margin: 30px auto 0;
+    padding: 15px 40px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--shadow);
+    font-family: inherit;
+    text-transform: lowercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.hauptwunsch-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.hauptwunsch-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.hauptwunsch-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.hauptwunsch-button:active {
+    transform: translateY(0) scale(1);
+}
+
+body.christmas-theme .hauptwunsch-button {
+    background: linear-gradient(135deg, #dc3545, #ffd700);
+    animation: button-glow 2s ease-in-out infinite;
+}
+
+body.christmas-theme .hauptwunsch-button:hover {
+    background: linear-gradient(135deg, #c82333, #ffed4e);
+}
+
+@keyframes button-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(255, 215, 0, 0.6), 0 0 40px rgba(220, 53, 69, 0.4);
+    }
 }
 
 @keyframes fadeIn {
@@ -1186,6 +1252,313 @@ body.christmas-theme .special-popup-content {
     box-shadow: 0 10px 50px rgba(255, 215, 0, 0.5);
 }
 
+/* Playstation Modal */
+.playstation-modal {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+}
+
+.playstation-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playstation-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a, #2d1b1b);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(0, 123, 255, 0.3);
+    border: 4px solid #007bff;
+    position: relative;
+    overflow: visible;
+}
+
+.playstation-modal.show .playstation-modal-content {
+    animation: playstationModalPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes playstationModalPop {
+    0% {
+        transform: scale(0.3) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.playstation-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.3s ease;
+    z-index: 1;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+}
+
+.playstation-modal-close:hover {
+    color: #007bff;
+    transform: scale(1.3) rotate(90deg);
+    text-shadow: 0 0 20px rgba(0, 123, 255, 1);
+}
+
+.playstation-image-container {
+    position: relative;
+    margin: 20px 0;
+    animation: imageFloat 3s ease-in-out infinite;
+}
+
+@keyframes imageFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(-1deg);
+    }
+    75% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+}
+
+.playstation-image {
+    max-width: 100%;
+    max-height: 50vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 40px rgba(0, 123, 255, 0.5),
+        0 0 60px rgba(0, 123, 255, 0.3),
+        inset 0 0 30px rgba(0, 123, 255, 0.2);
+    animation: imagePulse 2s ease-in-out infinite, imageRotate 8s linear infinite;
+    filter: brightness(1.1) contrast(1.1);
+}
+
+@keyframes imagePulse {
+    0%, 100% {
+        box-shadow: 
+            0 10px 40px rgba(0, 123, 255, 0.5),
+            0 0 60px rgba(0, 123, 255, 0.3),
+            inset 0 0 30px rgba(0, 123, 255, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 15px 60px rgba(0, 123, 255, 0.8),
+            0 0 100px rgba(0, 123, 255, 0.6),
+            inset 0 0 50px rgba(0, 123, 255, 0.4);
+    }
+}
+
+@keyframes imageRotate {
+    0% {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(1000px) rotateY(360deg);
+    }
+}
+
+.playstation-text {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #007bff;
+    margin: 30px 0;
+    text-shadow: 
+        0 0 20px rgba(0, 123, 255, 0.8),
+        0 0 40px rgba(0, 123, 255, 0.6),
+        0 0 60px rgba(0, 123, 255, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    animation: textBounce 1s ease-in-out infinite, textGlow 2s ease-in-out infinite;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+@keyframes textBounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(0, 123, 255, 0.8),
+            0 0 40px rgba(0, 123, 255, 0.6),
+            0 0 60px rgba(0, 123, 255, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+        color: #007bff;
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(0, 123, 255, 1),
+            0 0 60px rgba(0, 123, 255, 0.8),
+            0 0 90px rgba(0, 123, 255, 0.6),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+        color: #00a8ff;
+    }
+}
+
+.playstation-confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 30px;
+}
+
+.playstation-confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #007bff;
+    animation: confettiExplode 3s ease-out forwards;
+    border-radius: 50%;
+}
+
+.playstation-confetti:nth-child(odd) {
+    background: #00a8ff;
+    width: 12px;
+    height: 12px;
+}
+
+.playstation-confetti:nth-child(even) {
+    background: #0056b3;
+    width: 8px;
+    height: 8px;
+}
+
+.playstation-confetti:nth-child(3n) {
+    background: #ffd700;
+    width: 14px;
+    height: 14px;
+}
+
+.playstation-confetti:nth-child(4n) {
+    background: #dc3545;
+    width: 10px;
+    height: 10px;
+}
+
+@keyframes confettiExplode {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(720deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Christmas theme for Playstation modal */
+body.christmas-theme .playstation-modal-content {
+    background: linear-gradient(135deg, #2d1b1b, #1a1a1a);
+    border: 4px solid #ffd700;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 100px rgba(255, 215, 0, 0.5);
+}
+
+body.christmas-theme .playstation-text {
+    color: #ffd700;
+    text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 60px rgba(220, 53, 69, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.christmas-theme .playstation-text {
+    animation: textBounce 1s ease-in-out infinite, textGlowChristmas 2s ease-in-out infinite;
+}
+
+@keyframes textGlowChristmas {
+    0%, 100% {
+        text-shadow: 
+            0 0 20px rgba(255, 215, 0, 0.8),
+            0 0 40px rgba(255, 215, 0, 0.6),
+            0 0 60px rgba(220, 53, 69, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+        color: #ffd700;
+    }
+    50% {
+        text-shadow: 
+            0 0 30px rgba(255, 215, 0, 1),
+            0 0 60px rgba(255, 215, 0, 0.8),
+            0 0 90px rgba(220, 53, 69, 0.6),
+            0 4px 8px rgba(0, 0, 0, 0.5);
+        color: #ffed4e;
+    }
+}
+
+body.christmas-theme .playstation-image {
+    box-shadow: 
+        0 10px 40px rgba(255, 215, 0, 0.5),
+        0 0 60px rgba(255, 215, 0, 0.3),
+        inset 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+body.christmas-theme .playstation-image {
+    animation: imagePulseChristmas 2s ease-in-out infinite, imageRotate 8s linear infinite;
+}
+
+@keyframes imagePulseChristmas {
+    0%, 100% {
+        box-shadow: 
+            0 10px 40px rgba(255, 215, 0, 0.5),
+            0 0 60px rgba(255, 215, 0, 0.3),
+            inset 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 15px 60px rgba(255, 215, 0, 0.8),
+            0 0 100px rgba(255, 215, 0, 0.6),
+            inset 0 0 50px rgba(255, 215, 0, 0.4);
+    }
+}
+
+body.christmas-theme .playstation-modal-close {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+body.christmas-theme .playstation-modal-close:hover {
+    color: #ffed4e;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+}
+
 /* Responsive design for quiz */
 @media (max-width: 767px) {
     .quiz-content {
@@ -1219,6 +1592,15 @@ body.christmas-theme .special-popup-content {
     
     .special-popup-content p {
         font-size: 1rem;
+    }
+    
+    .playstation-text {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .playstation-modal-content {
+        padding: 20px;
     }
 }
 

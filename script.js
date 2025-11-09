@@ -199,6 +199,7 @@ function checkAnswer(questionIndex, answerIndex) {
                 showButtonHint();
                 setupImageModal();
                 setupGiftModals();
+                setupPlaystationModal();
                 
                 // Update texts based on current theme
                 const isChristmas = body.classList.contains('christmas-theme');
@@ -327,6 +328,7 @@ function showFinalResults() {
             showButtonHint();
             setupImageModal();
             setupGiftModals();
+            setupPlaystationModal();
             
             // Update texts based on current theme
             const isChristmas = body.classList.contains('christmas-theme');
@@ -799,6 +801,220 @@ function setupGiftModals() {
     });
 }
 
+// Playstation Modal functionality
+let isModalOpening = false;
+
+function setupPlaystationModal() {
+    const hauptwunschButton = document.getElementById('hauptwunschButton');
+    const playstationModal = document.getElementById('playstationModal');
+    const playstationModalClose = document.getElementById('playstationModalClose');
+    const playstationConfetti = document.getElementById('playstationConfetti');
+    const playstationImage = document.getElementById('playstationImage');
+    const playstationText = document.getElementById('playstationText');
+    
+    if (!hauptwunschButton || !playstationModal) {
+        return;
+    }
+    
+    // Function to clear all confetti
+    function clearAllConfetti() {
+        // Clear modal confetti
+        if (playstationConfetti) {
+            playstationConfetti.innerHTML = '';
+        }
+        // Clear body confetti
+        document.querySelectorAll('.confetti').forEach(el => {
+            if (el.parentNode) {
+                el.remove();
+            }
+        });
+    }
+    
+    // Function to reset animations
+    function resetAnimations() {
+        if (playstationImage) {
+            // Remove animation
+            playstationImage.style.animation = 'none';
+            playstationImage.style.transform = 'none';
+            // Force reflow
+            void playstationImage.offsetWidth;
+            // Re-apply animation with explicit values to force restart
+            // Check if Christmas theme
+            const isChristmas = document.body.classList.contains('christmas-theme');
+            if (isChristmas) {
+                playstationImage.style.animation = 'imagePulseChristmas 2s ease-in-out infinite, imageRotate 8s linear infinite';
+            } else {
+                playstationImage.style.animation = 'imagePulse 2s ease-in-out infinite, imageRotate 8s linear infinite';
+            }
+        }
+        if (playstationText) {
+            playstationText.style.animation = 'none';
+            void playstationText.offsetWidth;
+            // Re-apply animation
+            const isChristmas = document.body.classList.contains('christmas-theme');
+            if (isChristmas) {
+                playstationText.style.animation = 'textBounce 1s ease-in-out infinite, textGlowChristmas 2s ease-in-out infinite';
+            } else {
+                playstationText.style.animation = 'textBounce 1s ease-in-out infinite, textGlow 2s ease-in-out infinite';
+            }
+        }
+    }
+    
+    hauptwunschButton.addEventListener('click', () => {
+        // Prevent multiple clicks
+        if (isModalOpening) return;
+        isModalOpening = true;
+        
+        // Clear any existing confetti first
+        clearAllConfetti();
+        
+        // Reset animations
+        resetAnimations();
+        
+        // Show modal
+        playstationModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        
+        // Small delay to ensure modal is visible before creating confetti and resetting animations
+        setTimeout(() => {
+            // Update references in case they changed
+            const currentImage = document.getElementById('playstationImage');
+            const currentText = document.getElementById('playstationText');
+            
+            // Reset animations again after modal is visible with fresh references
+            if (currentImage) {
+                currentImage.style.animation = 'none';
+                currentImage.style.transform = 'none';
+                void currentImage.offsetWidth;
+                const isChristmas = document.body.classList.contains('christmas-theme');
+                if (isChristmas) {
+                    currentImage.style.animation = 'imagePulseChristmas 2s ease-in-out infinite, imageRotate 8s linear infinite';
+                } else {
+                    currentImage.style.animation = 'imagePulse 2s ease-in-out infinite, imageRotate 8s linear infinite';
+                }
+            }
+            if (currentText) {
+                currentText.style.animation = 'none';
+                void currentText.offsetWidth;
+                const isChristmas = document.body.classList.contains('christmas-theme');
+                if (isChristmas) {
+                    currentText.style.animation = 'textBounce 1s ease-in-out infinite, textGlowChristmas 2s ease-in-out infinite';
+                } else {
+                    currentText.style.animation = 'textBounce 1s ease-in-out infinite, textGlow 2s ease-in-out infinite';
+                }
+            }
+            
+            // Create confetti explosion
+            createPlaystationConfetti(playstationConfetti);
+            
+            // Create additional confetti on body
+            createBodyConfetti();
+            
+            isModalOpening = false;
+        }, 150);
+    });
+    
+    // Function to close modal
+    function closeModal() {
+        playstationModal.classList.remove('show');
+        document.body.style.overflow = '';
+        // Clear confetti
+        clearAllConfetti();
+        // Reset animation references for next time
+        const img = document.getElementById('playstationImage');
+        const txt = document.getElementById('playstationText');
+        if (img) {
+            img.style.animation = '';
+            img.style.transform = '';
+        }
+        if (txt) {
+            txt.style.animation = '';
+        }
+    }
+    
+    // Close modal
+    if (playstationModalClose) {
+        playstationModalClose.addEventListener('click', closeModal);
+    }
+    
+    // Close modal when clicking outside
+    playstationModal.addEventListener('click', (e) => {
+        if (e.target === playstationModal) {
+            closeModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && playstationModal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+}
+
+// Create confetti inside modal
+function createPlaystationConfetti(container) {
+    if (!container) return;
+    
+    // Make sure container is visible and has dimensions
+    const rect = container.getBoundingClientRect();
+    const centerX = rect.width / 2 || container.offsetWidth / 2 || 200;
+    const centerY = rect.height / 2 || container.offsetHeight / 2 || 200;
+    
+    const confettiCount = 50;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'playstation-confetti';
+        
+        // Random position from center
+        const angle = (Math.PI * 2 * i) / confettiCount;
+        const distance = 100 + Math.random() * 150;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        confetti.style.left = centerX + 'px';
+        confetti.style.top = centerY + 'px';
+        confetti.style.setProperty('--tx', tx + 'px');
+        confetti.style.setProperty('--ty', ty + 'px');
+        confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+        confetti.style.animation = 'confettiExplode 3s ease-out forwards';
+        
+        container.appendChild(confetti);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (confetti.parentNode) {
+                confetti.remove();
+            }
+        }, 3000);
+    }
+}
+
+// Create confetti on body (falling from top)
+function createBodyConfetti() {
+    const colors = ['#007bff', '#00a8ff', '#0056b3', '#ffd700', '#dc3545'];
+    const confettiCount = 200;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+        confetti.style.height = confetti.style.width;
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+            if (confetti.parentNode) {
+                confetti.remove();
+            }
+        }, 5000);
+    }
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize quiz first
@@ -809,6 +1025,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (submitButton) {
         submitButton.addEventListener('click', submitQuiz);
     }
+    
+    // Set up Playstation modal
+    setupPlaystationModal();
     
     // Main content will be initialized when quiz is passed
 });
